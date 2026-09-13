@@ -1,41 +1,35 @@
-# Explorador de Filmes
+# Explorador de Séries
 
 ## Autor
 Davi Leite Macedo Maduro — Matrícula 22553233
 
 ## Descrição
 
-Aplicação frontend que busca filmes por título utilizando a API pública OMDb (Open Movie Database) e exibe informações como poster, título, ano, nota, duração, gêneros e resumo.
+Aplicação frontend que permite pesquisar séries usando a API pública TVMaze e exibe informações como nome, poster, ano de estreia, nota, gêneros e resumo.
 
 ## API utilizada
 
-* OMDb API — https://www.omdbapi.com/
-
-* Endpoint principal: `https://www.omdbapi.com/`
-
-A aplicação utiliza uma chave de API para realizar as consultas e busca os filmes pelo título.
+- TVMaze API — https://www.tvmaze.com/api
+- Endpoint utilizado: `https://api.tvmaze.com/search/shows?q=TERMO`
 
 ## Funcionalidades
 
-* Buscar filmes por título através do campo de busca.
-* Realizar a busca utilizando o botão "Buscar" ou pressionando Enter.
-* Exibir poster, título, ano, nota, duração, gêneros e resumo.
-* Limitar a exibição aos primeiros 12 resultados.
-* Tratamento de erros na comunicação com a API.
-* Mensagem quando nenhum filme é encontrado.
+- Pesquisar séries por nome (campo de busca).
+- Iniciar busca com o botão `Buscar` ou pressionando `Enter`.
+- Exibir em cards: nome, poster (quando disponível), ano de estreia, nota, gêneros e resumo.
+- Tratamento de erros e mensagem amigável quando não há resultados.
 
 ## Como executar localmente
 1. Clone o repositório:
 git clone URL_DO_REPOSITORIO
 2. Abra a pasta do projeto.
-3. Abra o arquivo `index.html` no navegador ou utilize um servidor local, como o Live Server.
-4. Outra opção é utilizar:
-npx http-server -p 5500
-5. Acesse:
-http://localhost:5500
+3. Abra o arquivo `index.html` no navegador ou use um servidor local (recomendado). Exemplo com Python 3:
 
+python -m http.server 5500
+
+npx http-server -p 5500
+4. Abra `http://localhost:5500` no navegador.
 
 ## Links
-
-* Aplicação no ar (GitHub Pages): https://davileitee.github.io/ExploradorDeFilmes/
-* Repositório: https://github.com/davileitee/ExploradorDeFilmes.git
+- Aplicação no ar (GitHub Pages): https://davileitee.github.io/ExploradorDeSeries/
+- Repositório: https://github.com/davileitee/ExploradorDeSeries

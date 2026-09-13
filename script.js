@@ -1,57 +1,45 @@
-const API_BASE = 'https://www.omdbapi.com/';
-const API_KEY = 'c1167a'; 
+// script.js — Explorador de Séries (usa TVMaze API)
+const API_BASE = 'https://api.tvmaze.com';
 
 function el(id){ return document.getElementById(id); }
 
-async function buscarFilmes(termo){
+function stripTags(html){ return html ? String(html).replace(/<[^>]*>/g,'') : ''; }
+
+async function buscarSeries(termo){
   const area = el('resultado');
   area.innerHTML = '<p class="hint">Carregando resultados…</p>';
 
-  if(!API_KEY){
-    area.innerHTML = '<p class="no-results">Chave de API não configurada. Edite <code>script.js</code> e defina <code>API_KEY</code>.</p>';
-    return;
-  }
-
   try{
-    const searchUrl = `${API_BASE}?apikey=${API_KEY}&s=${encodeURIComponent(termo)}&type=movie`;
-    const resp = await fetch(searchUrl);
+    const url = `${API_BASE}/search/shows?q=${encodeURIComponent(termo)}`;
+    const resp = await fetch(url);
     if(!resp.ok) throw new Error('Erro na requisição');
     const body = await resp.json();
 
-    if(body.Response === 'False'){
-      area.innerHTML = `<p class="no-results">Nenhum filme encontrado: ${escapeHtml(body.Error || 'Tente outro termo')}</p>`;
+    if(!Array.isArray(body) || body.length === 0){
+      area.innerHTML = '<p class="no-results">Não encontramos nenhuma série com esse nome. Tente outro termo.</p>';
       return;
     }
 
-    const results = body.Search || [];
-    if(results.length === 0){
-      area.innerHTML = '<p class="no-results">Nenhum filme encontrado para esse termo. Tente outro título.</p>';
-      return;
-    }
-
-
-    const detailsPromises = results.slice(0, 12).map(r => fetch(`${API_BASE}?apikey=${API_KEY}&i=${r.imdbID}&plot=short`).then(res=>res.json()).catch(()=>null));
-    const details = await Promise.all(detailsPromises);
+    const shows = body.slice(0, 12).map(item => item.show || item);
 
     const html = ['<div class="grid">'];
-    for(const d of details){
-      if(!d || d.Response === 'False') continue;
-      const title = d.Title || '—';
-      const year = d.Year || '—';
-      const rating = d.imdbRating && d.imdbRating !== 'N/A' ? d.imdbRating : '—';
-      const runtime = d.Runtime && d.Runtime !== 'N/A' ? d.Runtime : '—';
-      const genres = d.Genre && d.Genre !== 'N/A' ? d.Genre : '';
-      const plot = truncate(d.Plot && d.Plot !== 'N/A' ? d.Plot : 'Sem resumo disponível.', 220);
-      const poster = d.Poster && d.Poster !== 'N/A' ? d.Poster : '';
+    for(const s of shows){
+      const name = s.name || 'Não informado';
+      const premiered = s.premiered ? (s.premiered.split('-')[0]) : 'Não informado';
+      const rating = s.rating && s.rating.average ? s.rating.average : 'Não informado';
+      const genres = Array.isArray(s.genres) && s.genres.length ? s.genres.join(', ') : 'Não informado';
+      const summaryRaw = s.summary || '';
+      const summary = truncate(stripTags(summaryRaw) || 'Não informado', 220);
+      const poster = (s.image && (s.image.medium || s.image.original)) ? (s.image.medium || s.image.original) : '';
 
       html.push(`
         <article class="card">
-          <img class="poster" src="${poster}" alt="Poster de ${escapeHtml(title)}" onerror="this.style.display='none'">
+          ${poster ? `<img class="poster" src="${poster}" alt="Poster de ${escapeHtml(name)}" onerror="this.style.display='none'">` : ''}
           <div class="card-body">
-            <h3 class="title">${escapeHtml(title)}</h3>
-            <div class="meta">${year} • Nota: ${rating} • ${runtime}</div>
+            <h3 class="title">${escapeHtml(name)}</h3>
+            <div class="meta">${escapeHtml(premiered)} • Nota: ${escapeHtml(rating)}</div>
             <div class="meta">${escapeHtml(genres)}</div>
-            <p class="overview">${escapeHtml(plot)}</p>
+            <p class="overview">${escapeHtml(summary)}</p>
           </div>
         </article>
       `);
@@ -61,7 +49,7 @@ async function buscarFilmes(termo){
 
   }catch(err){
     console.error(err);
-    el('resultado').innerHTML = '<p class="no-results">Ops! Não foi possível buscar os filmes agora. Verifique sua conexão ou tente novamente mais tarde.</p>';
+    el('resultado').innerHTML = '<p class="no-results">Não foi possível buscar as séries agora. Tente novamente mais tarde.</p>';
   }
 }
 
@@ -78,13 +66,13 @@ function escapeHtml(s){
 document.addEventListener('DOMContentLoaded', ()=>{
   el('botao-buscar').addEventListener('click', ()=>{
     const termo = el('campo-busca').value.trim();
-    if(termo) buscarFilmes(termo);
+    if(termo) buscarSeries(termo);
   });
 
   el('campo-busca').addEventListener('keydown', (e)=>{
     if(e.key === 'Enter'){
       const termo = el('campo-busca').value.trim();
-      if(termo) buscarFilmes(termo);
+      if(termo) buscarSeries(termo);
     }
   });
 });
