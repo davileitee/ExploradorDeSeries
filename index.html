@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Explorador de Filmes</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <main class="container">
+      <header>
+        <h1>Explorador de Filmes</h1>
+        <p class="tagline">Busque filmes por título e veja detalhes úteis (poster, ano, nota, resumo).</p>
+      </header>
+
+      <section class="search">
+        <input id="campo-busca" type="search" placeholder="Digite o título do filme (ex: inception)" aria-label="Buscar filme">
+        <button id="botao-buscar">Buscar</button>
+      </section>
+
+      <section id="resultado" class="resultado">
+        <p class="hint">Digite um termo e clique em Buscar para ver resultados.</p>
+      </section>
+
+      <footer>
+        <small>API usada: OMDb (https://www.omdbapi.com/). Projeto de exemplo.</small>
+      </footer>
+    </main>
+
+    <!-- Adiciona query string para evitar cache antigo do navegador -->
+    <script src="script.js?v=2"></script>
+  </body>
+</html>
