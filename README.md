@@ -18,6 +18,7 @@ Aplicação frontend que busca filmes por título usando a API pública YTS e ex
 ## Como executar localmente
 1. Clone: `git clone URL_DO_REPOSITORIO`
 2. Abra o arquivo `index.html` no navegador (ou use Live Server no VS Code).
+3. Use "npx http-server -p 5500" e abra http://localhost:5500 no navegador
 
 ## Links 
 - Aplicação no ar (GitHub Pages): https://davileitee.github.io/ExploradorDeFilmes/
