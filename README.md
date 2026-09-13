@@ -8,7 +8,7 @@ Aplicação frontend que busca filmes por título usando a API pública YTS e ex
 
 ## API utilizada
 - YTS — https://yts.mx/api
-- Endpoint principal: `https://yts.mx/api/v2/list_movies.json?query_term=TERMO`
+- Endpoint principal: `https://www.omdbapi.com/c1167a`
 
 ## Funcionalidades
 - Buscar filmes por título (campo de busca + Enter ou botão Buscar).
