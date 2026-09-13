@@ -1,4 +1,4 @@
-# Explorador de Filmes
+# Explorador de Filmes (Funciona buscando em ingles)
 
 ## Autor
 Davi Leite Macedo Maduro — Matrícula 22553233
