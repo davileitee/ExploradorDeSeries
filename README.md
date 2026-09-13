@@ -19,6 +19,6 @@ Aplicação frontend que busca filmes por título usando a API pública YTS e ex
 1. Clone: `git clone URL_DO_REPOSITORIO`
 2. Abra o arquivo `index.html` no navegador (ou use Live Server no VS Code).
 
-## Links (preencha com seus links)
-- Aplicação no ar (GitHub Pages): https://seu-usuario.github.io/bootcamp2-app/
-- Repositório: https://github.com/seu-usuario/bootcamp2-app
+## Links 
+- Aplicação no ar (GitHub Pages): https://davileitee.github.io/ExploradorDeFilmes/
+- Repositório: https://github.com/davileitee/ExploradorDeFilmes.git
