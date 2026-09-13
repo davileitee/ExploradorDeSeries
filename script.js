@@ -1,7 +1,5 @@
-// script.js — Explorador de Filmes (usa OMDb API)
-// ATENÇÃO: se quiser usar sua própria chave, substitua API_KEY abaixo.
 const API_BASE = 'https://www.omdbapi.com/';
-const API_KEY = 'c1167a'; // exemplo; se inválida a API responde com Error
+const API_KEY = 'c1167a'; 
 
 function el(id){ return document.getElementById(id); }
 
@@ -31,7 +29,7 @@ async function buscarFilmes(termo){
       return;
     }
 
-    // buscar detalhes para cada filme (nota, tempo, plot)
+
     const detailsPromises = results.slice(0, 12).map(r => fetch(`${API_BASE}?apikey=${API_KEY}&i=${r.imdbID}&plot=short`).then(res=>res.json()).catch(()=>null));
     const details = await Promise.all(detailsPromises);
 
