@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Explorador de Séries</title>
     <link rel="stylesheet" href="style.css">
-
   </head>
   <body>
     <main class="container">
@@ -16,11 +15,18 @@
 
       <section class="search">
         <input id="campo-busca" type="search" placeholder="Digite o nome da série (ex: friends)" aria-label="Buscar série">
-        <button id="botao-buscar">Buscar</button>
+        <button id="botao-buscar" type="button">Buscar</button>
       </section>
 
-      <section id="resultado" class="resultado">
+      <section id="resultado" class="resultado" aria-live="polite">
         <p class="hint">Digite um termo e clique em Buscar para ver resultados.</p>
+      </section>
+
+      <section class="saved-series" aria-live="polite">
+        <h2>Minhas séries salvas</h2>
+        <div id="series-salvas" class="saved-list">
+          <p class="hint">Carregando suas séries salvas…</p>
+        </div>
       </section>
 
       <footer>
@@ -28,7 +34,6 @@
       </footer>
     </main>
 
-    <!-- Adiciona query string para evitar cache antigo do navegador -->
-    <script src="script.js?v=2"></script>
+    <script type="module" src="script.js?v=3"></script>
   </body>
 </html>
