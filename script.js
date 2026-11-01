@@ -216,6 +216,23 @@ async function excluirSerie(id) {
   }
 }
 
+async function limparListaSeries() {
+  if (!SUPABASE_CONFIGURADO || !supabase) {
+    renderSavedSeriesMessage('Configure a URL e a chave anon do Supabase para limpar a lista.', false);
+    return;
+  }
+
+  try {
+    const { error } = await supabase.from('series_salvas').delete().neq('id', 0);
+    if (error) throw error;
+    renderSavedSeriesMessage('Lista de séries limpa com sucesso.', false);
+    await carregarSeriesSalvas();
+  } catch (error) {
+    console.error(error);
+    renderSavedSeriesMessage('Não foi possível limpar a lista de séries.', true);
+  }
+}
+
 async function atualizarAssistida(id, assistida) {
   if (!SUPABASE_CONFIGURADO || !supabase) return;
 
@@ -243,10 +260,15 @@ async function atualizarAnotacao(id, anotacao) {
 document.addEventListener('DOMContentLoaded', () => {
   const campoBusca = el('campo-busca');
   const botaoBuscar = el('botao-buscar');
+  const botaoLimparLista = el('botao-limpar-lista');
 
   botaoBuscar.addEventListener('click', () => {
     const termo = campoBusca.value.trim();
     if (termo) buscarSeries(termo);
+  });
+
+  botaoLimparLista.addEventListener('click', async () => {
+    await limparListaSeries();
   });
 
   campoBusca.addEventListener('keydown', (event) => {
