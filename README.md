@@ -44,7 +44,7 @@ docker run -d -p 8080:80 davileitem/explorador-series:1.1
 ```
 
 ## Persistência de dados
-O projeto usa Supabase com PostgreSQL para armazenar as séries escolhidas pelo usuário. Os dados não ficam em localStorage e continuam disponíveis mesmo após fechar o navegador, desde que a URL do projeto e a chave anon pública do Supabase estejam configuradas corretamente no topo do arquivo script.js.
+O projeto usa Supabase com PostgreSQL para armazenar as séries escolhidas pelo usuário. Os dados não ficam em localStorage e continuam disponíveis mesmo após fechar o navegador. A URL do projeto e a chave anon pública do Supabase já estão configuradas no topo do arquivo script.js; a chave anon é pública por design e própria para uso no frontend.
 
 ### Estrutura da tabela
 Arquivo de referência: supabase/schema.sql
@@ -88,24 +88,32 @@ As tags aplicadas para a imagem são:
 - davileitem/explorador-series:1.1
 - davileitem/explorador-series:latest
 
+As três tags aparecem em: https://hub.docker.com/r/davileitem/explorador-series/tags
+
 ### SQ3 — overview do Docker Hub
-O texto pronto para colar no overview do Docker Hub está em docs/dockerhub-overview.md.
+O Overview do repositório no Docker Hub já está preenchido, com a descrição da aplicação, o comando docker run pronto para copiar e o link do repositório GitHub. O texto usado está salvo em docs/dockerhub-overview.md.
 
 ### SQ4 — dois containers simultâneos e evidências
-Para validar a execução local, o projeto foi executado em duas portas diferentes com nomes distintos:
-- 8080:80
-- 8081:80
+Para validar a execução, a imagem publicada foi executada em dois containers ao mesmo tempo, com nomes e portas diferentes:
 
-A saída do comando docker ps foi salva em evidencias/docker-ps.txt.
+```bash
+docker run -d -p 8080:80 --name app1 davileitem/explorador-series:1.1
+docker run -d -p 8081:80 --name app2 davileitem/explorador-series:1.1
+docker ps
+```
+
+Print do docker ps mostrando app1 (porta 8080) e app2 (porta 8081) em execução:
+
+![docker ps com dois containers](evidencias/docker-ps.png)
 
 Se eu tivesse 100 containers, eu gerenciaria com Kubernetes: criaria um cluster com nós de trabalho, distribuiria os pods em Deployments/ReplicaSets para manter réplicas desejadas, configuraria escalonamento horizontal com HPA e monitoramento para ajustar capacidade conforme a carga. Além disso, o Kubernetes recupera falhas automaticamente reiniciando pods, redistribuindo cargas e permitindo atualização gradual sem downtime, o que é a forma mais robusta de operar centenas de containers em produção.
 
 ## Evidências e documentação extra
 - Arquivo do overview do Docker Hub: docs/dockerhub-overview.md
 - Arquivo do SQL do banco: supabase/schema.sql
-- Saída do docker ps: evidencias/docker-ps.txt
+- Print do docker ps com dois containers: evidencias/docker-ps.png
 
 ## Observações finais
 - A busca original continua funcionando com a TVMaze.
-- A persistência em Supabase exige a configuração da URL do projeto e da chave anon pública no script.js.
+- A persistência em Supabase usa a URL do projeto e a chave anon pública já configuradas no script.js.
 - O projeto é estático e não cria servidor próprio para o backend; o banco é acessado diretamente pelo navegador usando o cliente oficial do Supabase.
