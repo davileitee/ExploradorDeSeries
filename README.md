@@ -96,11 +96,11 @@ O Overview do repositório no Docker Hub já está preenchido, com a descrição
 ### SQ4 — dois containers simultâneos e evidências
 Para validar a execução, a imagem publicada foi executada em dois containers ao mesmo tempo, com nomes e portas diferentes:
 
-```bash
+bash
 docker run -d -p 8080:80 --name app1 davileitem/explorador-series:1.1
 docker run -d -p 8081:80 --name app2 davileitem/explorador-series:1.1
 docker ps
-```
+
 
 Print do docker ps mostrando app1 (porta 8080) e app2 (porta 8081) em execução:
 
