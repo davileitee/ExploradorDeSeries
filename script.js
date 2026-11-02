@@ -1,8 +1,8 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
 const API_BASE = 'https://api.tvmaze.com';
-const SUPABASE_URL = 'https://SEU-PROJETO.supabase.co';
-const SUPABASE_ANON_KEY = 'SUA_CHAVE_ANON';
+const SUPABASE_URL = 'https://jssengkffalyrhbmleks.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impzc2VuZ2tmZmFseXJoYm1sZWtzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTM1NjgxODgsImV4cCI6MjEwOTE0NDE4OH0.NoXfiX855PrfhYPdaa908zbrCYnbHWYjqa38-p5hC8s';
 const SUPABASE_CONFIGURADO = !(SUPABASE_URL.includes('SEU-PROJETO') || SUPABASE_ANON_KEY.includes('SUA_CHAVE_ANON'));
 const supabase = SUPABASE_CONFIGURADO ? createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
